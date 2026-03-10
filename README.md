@@ -39,3 +39,12 @@ It uses **Flask + Local LLM (Ollama)** to rewrite text in a more **formal, clear
 ![App Screenshots](Screenshot/home.png)
 
 ![App Screenshots](Screenshot/home2.png)
+
+## Why this project?
+
+Pandas-AI helps improve academic writing by combining:
+
+- Local LLM rewriting
+- Grammar analysis
+- Readability scoring
+- Clarity and redundancy detection
