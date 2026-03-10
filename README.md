@@ -20,6 +20,13 @@ It uses **Flask + Local LLM (Ollama)** to rewrite text in a more **formal, clear
 - Clean web interface
 - Runs completely **locally**
 
+## Future Improvements
+
+- Add support for multiple LLM models
+- Improve rewriting speed and optimization
+- Add citation and reference assistance
+- Provide REST API access
+
 ---
 
 ## Tech Stack
@@ -72,16 +79,44 @@ python app.py
 3. Click rewrite
 4. The AI will generate an academic version
 
+## Example
+
+Input:
+
+This research study was conducted to examine the impact of social media on student learning behavior.
+
+Output:
+
+This study investigates the impact of social media on students' learning behavior.
+
 ---
 
 ## Project Structure
 
+Pandas-AI/
+│
+├── app.py                # Flask application
+├── requirements.txt      # Python dependencies
+├── ai_engine/            # AI modules
+│   ├── llm_rewrite.py
+│   ├── grammar.py
+│   ├── readability.py
+│   └── quality.py
+│
+├── humanizer/            # text preprocessing
+│
+├── templates/            # HTML templates
+├── static/               # CSS / JS
+│
+└── screenshots/          # demo images
 
-## screenshots
+---
 
-![App screenshots](screenshot/home.png)
+## App Preview
 
-![App screenshots](screenshot/home2.png)
+![App interface](screenshot/home.png)
+
+![App interface](screenshot/home2.png)
 
 ---
 
