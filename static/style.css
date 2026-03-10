@@ -1,0 +1,386 @@
+/* =========================
+   0) Base layout / Background
+   ========================= */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background:
+    radial-gradient(1200px 700px at 20% 10%, rgba(76, 0, 255, 0.25), transparent 60%),
+    radial-gradient(900px 500px at 80% 30%, rgba(0, 200, 255, 0.18), transparent 60%),
+    #071225;
+  color: #eaf0ff;
+}
+
+.particles,
+.background-glow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+.particles {
+  opacity: 0.15;
+}
+
+.background-glow {
+  opacity: 0.1;
+}
+
+.main-container {
+  max-width: 1180px;
+  margin: 32px auto;
+  padding: 22px;
+}
+
+.card {
+  background: rgba(14, 22, 40, 0.62);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+}
+
+.header {
+  text-align: center;
+  padding: 10px 8px 18px;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 40px;
+  letter-spacing: 0.3px;
+}
+
+.subtitle {
+  margin: 8px 0 0;
+  color: rgba(234, 240, 255, 0.75);
+}
+
+/* =========================
+   1) Controls
+   ========================= */
+.controls {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  margin: 14px 0 18px;
+  flex-wrap: wrap;
+}
+
+.control {
+  min-width: 240px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.control label {
+  font-size: 13px;
+  color: rgba(234, 240, 255, 0.75);
+}
+
+select {
+  width: 100%;
+  background: rgba(10, 16, 30, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #eaf0ff;
+  padding: 12px;
+  border-radius: 12px;
+  outline: none;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+  appearance: none;
+}
+
+select:focus {
+  border-color: rgba(122, 43, 255, 0.65);
+  box-shadow: 0 0 0 3px rgba(122, 43, 255, 0.18);
+}
+
+option {
+  background: #0b1630;
+  color: #eaf0ff;
+}
+
+/* =========================
+   2) Editor panels
+   ========================= */
+.editor-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  align-items: start;
+}
+
+.editor-panel {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.section-title {
+  margin: 0 0 8px;
+  font-size: 20px;
+}
+
+textarea {
+  width: 100%;
+  height: 260px;
+  min-height: 260px;
+  max-height: 260px;
+  resize: none;
+  overflow-y: auto;
+  display: block;
+  border-radius: 14px;
+  background: rgba(10, 16, 30, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #eaf0ff;
+  padding: 14px;
+  font-size: 15px;
+  line-height: 1.5;
+  outline: none;
+}
+
+textarea:focus {
+  border-color: rgba(122, 43, 255, 0.65);
+  box-shadow: 0 0 0 3px rgba(122, 43, 255, 0.12);
+}
+
+textarea::placeholder {
+  color: rgba(234, 240, 255, 0.45);
+}
+
+/* =========================
+   3) Buttons
+   ========================= */
+.button-group {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 12px;
+  margin-bottom: 2px;
+}
+
+.output-btn-row {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.primary-btn,
+.secondary-btn {
+  border: none;
+  cursor: pointer;
+  padding: 12px 22px;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 15px;
+  color: #fff;
+  transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
+}
+
+.primary-btn {
+  min-width: 150px;
+  background: linear-gradient(90deg, #2b74ff, #7a2bff);
+  box-shadow: 0 10px 30px rgba(73, 60, 255, 0.25);
+}
+
+.secondary-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.primary-btn:hover,
+.secondary-btn:hover {
+  transform: translateY(-1px);
+}
+
+.primary-btn:disabled,
+.secondary-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* =========================
+   Output actions / Loader
+   ========================= */
+
+.output-actions {
+  margin-top: 12px;
+  min-height: 52px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Generating button */
+.loader-row {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 46px;
+  padding: 0 22px;
+  border-radius: 14px;
+  background: linear-gradient(90deg, #2b74ff, #7a2bff);
+  color: white;
+  font-weight: 700;
+  font-size: 15px;
+  min-width: 150px;
+  width: auto;
+}
+
+/* Generating text */
+.loader-text {
+  color: white;
+  font-size: 15px;
+  letter-spacing: 0.2px;
+}
+
+/* hidden state */
+.hidden {
+  display: none !important;
+}
+
+
+
+
+
+
+/* =========================
+   5) Skeleton loading
+   ========================= */
+textarea.skeleton {
+  color: rgba(234, 240, 255, 0.6);
+  background-color: rgba(10, 16, 30, 0.35);
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.04) 0%,
+    rgba(255, 255, 255, 0.10) 50%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  animation: shimmer 1.2s infinite linear;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* =========================
+   6) Analysis panels
+   ========================= */
+.analysis-panel {
+  margin-top: 18px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+}
+
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 12px;
+}
+
+.insight {
+  background: rgba(10, 16, 30, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 14px;
+}
+
+.insight .k {
+  font-size: 13px;
+  color: rgba(234, 240, 255, 0.7);
+}
+
+.insight .v {
+  font-size: 22px;
+  margin-top: 6px;
+  font-weight: 800;
+}
+
+.issues {
+  margin-top: 14px;
+  background: rgba(10, 16, 30, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 14px;
+}
+
+.issues h4 {
+  margin: 0 0 10px;
+}
+
+.issues ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.issues li {
+  margin-bottom: 8px;
+  color: rgba(234, 240, 255, 0.88);
+}
+
+/* =========================
+   7) Responsive
+   ========================= */
+@media (max-width: 980px) {
+  .editor-wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .insights-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .control {
+    min-width: 280px;
+  }
+}
+
+@media (max-width: 640px) {
+  .main-container {
+    margin: 16px;
+    padding: 16px;
+  }
+
+  .header h1 {
+    font-size: 30px;
+  }
+
+  .button-group,
+  .output-btn-row {
+    flex-direction: column;
+  }
+
+  .primary-btn,
+  .secondary-btn {
+    width: 100%;
+  }
+
+  .control {
+    min-width: 100%;
+  }
+
+  textarea {
+    height: 220px;
+    min-height: 220px;
+    max-height: 220px;
+  }
+}
