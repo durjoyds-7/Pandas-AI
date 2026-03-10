@@ -35,11 +35,13 @@ It uses **Flask + Local LLM (Ollama)** to rewrite text in a more **formal, clear
 ## Installation
 
 Clone the repository:
+
 git clone https://github.com/durjoyds-7/Pandas-AI
 
 cd Pandas-AI
 
 Install dependencies:
+
 pip install -r requirements.txt
 
 
@@ -49,9 +51,11 @@ Download Ollama:
 https://ollama.com
 
 Start Ollama:
+
 ollama serve
 
 Pull the model:
+
 ollama pull llama3
 
 
@@ -72,7 +76,6 @@ python app.py
 
 ## Project Structure
 
----
 
 ## screenshots
 
