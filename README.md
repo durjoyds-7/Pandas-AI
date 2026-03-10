@@ -112,7 +112,7 @@ Pandas-AI/
 
 ---
 
-## App Preview
+## screenshots
 
 ![App interface](screenshot/home.png)
 
