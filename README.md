@@ -93,6 +93,7 @@ This study investigates the impact of social media on students' learning behavio
 
 ## Project Structure
 
+```text
 Pandas-AI/
 │
 ├── app.py                # Flask application
@@ -104,11 +105,10 @@ Pandas-AI/
 │   └── quality.py
 │
 ├── humanizer/            # text preprocessing
-│
 ├── templates/            # HTML templates
 ├── static/               # CSS / JS
-│
 └── screenshots/          # demo images
+```
 
 ---
 
@@ -128,3 +128,15 @@ Pandas-AI helps improve academic writing by combining:
 - Grammar analysis
 - Readability scoring
 - Clarity and redundancy detection
+
+---
+
+## Author
+
+DURJOY DEV SHARMA   
+AI Enthusiast
+
+GitHub:
+https://github.com/durjoyds-7
+
+---
