@@ -34,11 +34,11 @@ It uses **Flask + Local LLM (Ollama)** to rewrite text in a more **formal, clear
 
 ## Project Structure
 
-## Screenshots
+## screenshots
 
-![App Screenshots](Screenshot/home.png)
+![App screenshots](screenshot/home.png)
 
-![App Screenshots](Screenshot/home2.png)
+![App screenshots](screenshot/home2.png)
 
 ## Why this project?
 
