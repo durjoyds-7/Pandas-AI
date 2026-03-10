@@ -7,7 +7,7 @@
 
 Pandas-AI is a **local AI-powered academic rewriting assistant** designed for thesis, research papers, and academic writing.
 
-It uses **Flask + Local LLM (Ollama)** to rewrite text in a more **formal, clear, and thesis-ready style**.
+It uses **Flask + Local LLM (Ollama)** to rewrite text in a more **formal, clear, and academic ready style**.
 
 ---
 
@@ -32,13 +32,56 @@ It uses **Flask + Local LLM (Ollama)** to rewrite text in a more **formal, clear
 
 ---
 
+## Installation
+
+Clone the repository:
+git clone https://github.com/durjoyds-7/Pandas-AI
+cd Pandas-AI
+
+Install dependencies:
+pip install -r requirements.txt
+
+---
+
+## Install Ollama Model
+
+Download Ollama:
+https://ollama.com
+
+Start Ollama:
+ollama serve
+
+Pull the model:
+ollama pull llama3
+
+---
+
+## Run the App
+
+python app.py
+
+---
+
+## How to Use
+
+1. Paste your text in the input box
+2. Select rewrite mode
+3. Click rewrite
+4. The AI will generate an academic version
+
+---
+
 ## Project Structure
+
+---
 
 ## screenshots
 
 ![App screenshots](screenshot/home.png)
 
 ![App screenshots](screenshot/home2.png)
+
+---
 
 ## Why this project?
 
