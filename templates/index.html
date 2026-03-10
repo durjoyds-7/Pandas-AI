@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pandas-AI</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css', v=5) }}">
+</head>
+<body>
+  <div class="particles"></div>
+  <div class="background-glow"></div>
+
+  <div class="main-container card">
+    <div class="header">
+      <h1>🤖 Pandas-AI</h1>
+      <p class="subtitle">Improve Your Writing Assistant</p>
+    </div>
+
+    <form method="POST" action="/" id="rewriteForm" onsubmit="return onSubmitRewrite();">
+      <div class="controls">
+        <div class="control">
+          <label for="modeSelect">Mode</label>
+          <select name="mode" id="modeSelect">
+            {% for m in ["Thesis","Academic","Research","Humaniz","Formal","Simplify","Expand"] %}
+              <option value="{{ m }}" {% if mode == m %}selected{% endif %}>{{ m }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="control">
+          <label for="strengthSelect">Strength</label>
+          <select name="strength" id="strengthSelect">
+            {% for s in ["Low","Medium","Strong"] %}
+              <option value="{{ s }}" {% if strength == s %}selected{% endif %}>{{ s }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <div class="editor-wrapper">
+        <div class="editor-panel">
+          <h3 class="section-title">Your Draft</h3>
+
+          <textarea
+            name="text"
+            id="inputText"
+            placeholder="Paste your text here..."
+          >{{ request.form.get('text', '') }}</textarea>
+
+          <div class="button-group">
+            <button type="submit" class="primary-btn" id="humanizeBtn">
+              <span id="btnText">Rewrite</span>
+            </button>
+
+            <button type="button" class="secondary-btn" id="clearBtn" onclick="clearText()">
+              Clear
+            </button>
+          </div>
+        </div>
+
+        <div class="editor-panel">
+          <h3 class="section-title">Improved Version</h3>
+
+          <div id="result"></div>
+
+          <textarea id="outputText" readonly>{% if output %}{{ output }}{% endif %}</textarea>
+
+          <div class="output-actions">
+            <div id="loaderRow" class="loader-row hidden" aria-live="polite">
+              
+              <span class="loader-text">Generating...</span>
+            </div>
+
+            <div class="output-btn-row">
+              <button
+                type="button"
+                class="primary-btn hidden"
+                id="copyBtn"
+                onclick="copyText()"
+              >
+                Copy Result
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    {% if output %}
+    <div class="analysis-panel">
+      <h3 class="section-title">Writing Insights</h3>
+      <div class="insights-grid">
+        <div class="insight"><div class="k">Word Count</div><div class="v">{{ word_count }}</div></div>
+        <div class="insight"><div class="k">Sentence Count</div><div class="v">{{ sentence_count }}</div></div>
+        <div class="insight"><div class="k">Grammar Issues</div><div class="v">{{ grammar_issue_count }}</div></div>
+        <div class="insight"><div class="k">Readability (Flesch)</div><div class="v">{{ readability_flesch }}</div></div>
+        <div class="insight"><div class="k">Grade Level</div><div class="v">{{ readability_grade }}</div></div>
+        <div class="insight"><div class="k">Grammar Tool</div><div class="v">{{ grammar_status }}</div></div>
+      </div>
+
+      {% if grammar_issues and grammar_issues|length > 0 %}
+      <div class="issues">
+        <h4>Top Grammar Suggestions</h4>
+        <ul>
+          {% for it in grammar_issues %}
+            <li>{{ it.message }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="analysis-panel">
+      <h3 class="section-title">Quality Feedback (Thesis-ready)</h3>
+      <div class="insights-grid">
+        <div class="insight"><div class="k">Clarity Score</div><div class="v">{{ clarity_score }}/100</div></div>
+        <div class="insight"><div class="k">Avg Sentence Length</div><div class="v">{{ avg_sentence_length }}</div></div>
+        <div class="insight"><div class="k">Mode</div><div class="v">{{ mode }}</div></div>
+      </div>
+
+      {% if clarity_tips and clarity_tips|length > 0 %}
+      <div class="issues">
+        <h4>Clarity Tips</h4>
+        <ul>
+          {% for tip in clarity_tips %}
+            <li>{{ tip }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+
+      {% if tighten_suggestions and tighten_suggestions|length > 0 %}
+      <div class="issues">
+        <h4>Sentence Tightening</h4>
+        <ul>
+          {% for s in tighten_suggestions %}
+            <li>
+              {{ s.message }}
+              {% if s.before %}<br><b>Before:</b> {{ s.before }}{% endif %}
+              {% if s.after or s.after == "" %}<br><b>After:</b> {{ s.after }}{% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+
+      {% if redundancy_suggestions and redundancy_suggestions|length > 0 %}
+      <div class="issues">
+        <h4>Redundancy & Flow</h4>
+        <ul>
+          {% for s in redundancy_suggestions %}
+            <li>{{ s.message }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
+
+  <script>
+    function setHidden(el, hidden) {
+      if (!el) return;
+      el.classList.toggle("hidden", hidden);
+    }
+
+    function uiState(state) {
+      const loaderRow = document.getElementById("loaderRow");
+      const copyBtn = document.getElementById("copyBtn");
+
+      if (state === "processing") {
+        setHidden(loaderRow, false);
+        setHidden(copyBtn, true);
+        return;
+      }
+
+      if (state === "done") {
+        setHidden(loaderRow, true);
+        setHidden(copyBtn, false);
+        return;
+      }
+
+      setHidden(loaderRow, true);
+      setHidden(copyBtn, true);
+    }
+
+    function onSubmitRewrite() {
+      const input = document.getElementById("inputText");
+      const inputVal = (input.value || "").trim();
+
+      if (!inputVal) {
+        uiState("idle");
+        input.focus();
+        return false;
+      }
+
+      const rewriteBtn = document.getElementById("humanizeBtn");
+      const clearBtn = document.getElementById("clearBtn");
+      const btnText = document.getElementById("btnText");
+      const out = document.getElementById("outputText");
+      const anchor = document.getElementById("result");
+
+      rewriteBtn.disabled = true;
+      clearBtn.disabled = true;
+
+      if (btnText) btnText.innerText = "Processing...";
+
+      uiState("processing");
+
+      out.value = "";
+      out.classList.add("skeleton");
+
+      if (anchor) {
+        anchor.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      return true;
+    }
+
+    window.addEventListener("load", function () {
+      const out = document.getElementById("outputText");
+      const hasServerOutput =
+        (`{{ '1' if output else '' }}` === "1") &&
+        ((out.value || "").trim().length > 0);
+
+      out.classList.remove("skeleton");
+
+      if (hasServerOutput) {
+        uiState("done");
+        const anchor = document.getElementById("result");
+        if (anchor) {
+          anchor.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      } else {
+        uiState("idle");
+      }
+    });
+
+    async function copyText() {
+      const output = document.getElementById("outputText");
+      const text = (output.value || "").trim();
+
+      if (!text) return;
+
+      try {
+        await navigator.clipboard.writeText(text);
+        alert("Copied!");
+      } catch (err) {
+        output.select();
+        document.execCommand("copy");
+        alert("Copied!");
+      }
+    }
+
+    function clearText() {
+      const input = document.getElementById("inputText");
+      const out = document.getElementById("outputText");
+      const rewriteBtn = document.getElementById("humanizeBtn");
+      const clearBtn = document.getElementById("clearBtn");
+      const btnText = document.getElementById("btnText");
+
+      input.value = "";
+      out.value = "";
+      out.classList.remove("skeleton");
+
+      rewriteBtn.disabled = false;
+      clearBtn.disabled = false;
+
+      if (btnText) btnText.innerText = "Rewrite";
+
+      uiState("idle");
+      input.focus();
+    }
+  </script>
+</body>
+</html>
