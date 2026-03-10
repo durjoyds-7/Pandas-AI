@@ -1,5 +1,10 @@
 # Pandas-AI
 
+![Python](https://img.shields.io/badge/Python-3.10-blue)
+![Flask](https://img.shields.io/badge/Framework-Flask-black)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Local AI](https://img.shields.io/badge/AI-Local%20LLM-orange)
+
 Pandas-AI is a **local AI-powered academic rewriting assistant** designed for thesis, research papers, and academic writing.
 
 It uses **Flask + Local LLM (Ollama)** to rewrite text in a more **formal, clear, and thesis-ready style**.
