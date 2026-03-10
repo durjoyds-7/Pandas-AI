@@ -112,11 +112,11 @@ Pandas-AI/
 
 ---
 
-## screenshot
+## screenshots
 
-![App interface](screenshot/home.png)
+![App interface](screenshots/home.png)
 
-![App interface](screenshot/home2.png)
+![App interface](screenshots/home2.png)
 
 ---
 
