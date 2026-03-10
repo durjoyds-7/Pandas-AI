@@ -28,3 +28,7 @@ It uses **Flask + Local LLM (Ollama)** to rewrite text in a more **formal, clear
 ---
 
 ## Project Structure
+
+## Screenshot
+
+![App Screenshot](screenshots/home.png)
