@@ -31,6 +31,6 @@ It uses **Flask + Local LLM (Ollama)** to rewrite text in a more **formal, clear
 
 ## Screenshots
 
-![App Screenshot](Screenshot/home.png)
+![App Screenshots](Screenshot/home.png)
 
-![App Screenshot](Screenshot/home2.png)
+![App Screenshots](Screenshot/home2.png)
