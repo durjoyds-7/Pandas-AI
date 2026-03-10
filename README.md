@@ -1,5 +1,6 @@
 # Pandas-AI
 
+![MIT License](https://img.shields.io/badge/license-MIT-green)
 ![Python](https://img.shields.io/badge/Python-3.10-blue)
 ![Flask](https://img.shields.io/badge/Framework-Flask-black)
 ![License](https://img.shields.io/badge/License-MIT-green)
@@ -78,6 +79,22 @@ python app.py
 2. Select rewrite mode
 3. Click rewrite
 4. The AI will generate an academic version
+
+## Architecture
+
+```text
+User Input
+   ↓
+Preprocessing
+   ↓
+LLM Rewrite
+   ↓
+Quality Analyzer
+   ↓
+Grammar + Readability
+   ↓
+Output
+```
 
 ## Example
 
